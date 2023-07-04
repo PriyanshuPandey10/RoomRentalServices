@@ -1,0 +1,29 @@
+{% include 'admin_navigation.html' %}
+
+
+<table class="table table-primary">
+    <tr>
+        <th>S. No.</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Purpose</th>
+        <th>Action</th>
+    </tr>
+    {% for i in data %}
+        <td>{{forloop.counter}}</td>
+        <td>{{i.c_name}}</td>
+        <td>{{i.c_email}}</td>
+        <td>{{i.c_mobile}}</td>
+        <td>{{i.c_purpose}}</td>
+        <td><a href="{% url 'delete_contact' i.id %}" class="btn btn-danger btn-sm">Delete</a></td>
+
+    {% endfor %}
+
+</table>
+
+
+    {% if not data %}
+         <label style="margin-left:100px;font-size:50px;font-weight:bold;">No Data Found</label>
+        <a href="#" class="btn btn-primary" style="font-size:40px;font-weight:bold;margin-left:30px;">Back</a>
+     {% endif %}

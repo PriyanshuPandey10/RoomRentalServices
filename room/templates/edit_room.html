@@ -1,0 +1,87 @@
+{% load static %}
+
+{% include 'admin_navigation.html' %}
+
+<marquee behavior="alternate" style="font-family: 'Monotype Corsiva'; font-size:25px; color:darkcyan; background-color:black; font-weight:bold; margin-top:1%">
+    Edit Room Detail
+</marquee>
+<hr>
+<form class="container mt-5" onsubmit="return checkpass();" name="signup" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="form-group col-md-12" >
+            <label>Room Number:</label>
+            <input type="text" class="form-control" name="roomno" value="{{data.room_no}}" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6" >
+            <label>Price(Per Day):</label>
+            <input type="text" class="form-control" name="price" value="{{data.price}}" required>
+        </div>
+        <div class="form-group col-md-6" >
+            <label>Room Type:</label>
+            {% if data.type == "Single Person" %}
+            <select class="form-control" name="rtype" autofocus required>
+                <option value="Single Person" selected>Single Person</option>
+                <option value="Couple Room">Couple</option>
+                <option value="For  Family">For Family</option>
+            </select>
+            {% endif %}
+            {% if data.type == "Couple Room" %}
+            <select class="form-control" name="rtype" autofocus required>
+                <option value="Single Person">Single Person</option>
+                <option value="Couple Room" selected>Couple</option>
+                <option value="For  Family">For Family</option>
+            </select>
+            {% endif %}
+            {% if data.type == "For  Family" %}
+            <select class="form-control" name="rtype" autofocus required>
+                <option value="Single Person">Single Person</option>
+                <option value="Couple Room">Couple</option>
+                <option value="For  Family" selected>For Family</option>
+            </select>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6" >
+            <label>Room Status:</label>
+            {% if data.status == "Available" %}
+            <select class="form-control" name="status" autofocus>
+                <option value="Available" selected>Available</option>
+                <option value="Not Available">Not Available</option>
+            </select>
+            {% endif %}
+            {% if data.status == "Not Available" %}
+            <select class="form-control" name="status" autofocus>
+                <option value="Available">Available</option>
+                <option value="Not Available" selected>Not Available</option>
+            </select>
+            {% endif %}
+        </div>
+        <div class="form-group col-md-3" >
+            <td><img src="{{data.image.url}}" style="100px ; height : 100px; width : 270px; border-radius:10%"></td>
+        </div>
+         <div class="form-group col-md-3" >
+             <td><input type="file" name="room_img"></td>
+        </div>
+    </div>
+
+<input type="submit" value="Submit" class="btn btn-primary my-3" style="width:250px">
+</form>
+
+{% if error == "no" %}
+<script>
+    alert("Room Detail Updated Successfully")
+    window.location = ('{% url 'view_room_admin' %}')
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something Wrong, Try Again...")
+</script>
+{% endif %}

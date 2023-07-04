@@ -1,0 +1,52 @@
+{% include 'navigation.html' %}
+<marquee behavior="alternate"; style="font-family: 'Monotype Corsiva'; font-size:35px; color:darkcyan; background-color:black; font-weight:bold; margin-top:1%">
+    Contact Us
+</marquee>
+
+<form action="" method="post">
+    {% csrf_token %}
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <label>Full Name:</label>
+            <input type="text" class="form-control" name="fname" placeholder="Enter Your Full Name" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label>Email:</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter Your Email" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label>Mobile:</label>
+            <input type="text" class="form-control" name="mobile" placeholder="Enter Your Contact Number" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label>Purpose:</label>
+            <input type="text" class="form-control" name="purpose" placeholder="Purpose to contact..." required>
+        </div>
+    </div>
+    <center><br>
+        <input type="submit" class="btn btn-primary btn-lg">
+    </center>
+</div>
+</form>
+
+
+{% if error == "no" %}
+<script>
+    alert("Contact Detail Submitted Successfully")
+    window.location = ('{% url 'contact_us' %}')
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert("Something Wrong, Try Again...")
+</script>
+{% endif %}
+

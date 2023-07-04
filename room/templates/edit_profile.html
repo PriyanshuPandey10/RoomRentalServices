@@ -1,0 +1,105 @@
+<head>
+    <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+
+<marquee behavior="alternate"; style="font-family: 'Monotype Corsiva'; font-size:35px; color:darkcyan; background-color:black; font-weight:bold; margin-top:1%">
+    My Profile
+</marquee>
+<hr>
+<form class="container mt-5" onsubmit="return checkpass();" name="signup" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="text-center">
+            <img src="{{data2.image.url}}"  style="border:7px solid green; width:35%; height:40% ; border-radius:50%">
+        </div>
+    <div class="form-row">
+        <div class="form-group col-md-6" >
+            <label>First Name</label>
+            <input type="text" class="form-control" name="fname" value="{{request.user.first_name}}" required>
+        </div>
+
+        <div class="form-group col-md-6" >
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="lname" value="{{request.user.last_name}}">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12" >
+            <label>Email ID:</label>
+            <input type="text" class="form-control" name="email" value="{{request.user.username}}" readonly>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6" >
+            <label>Contact Number:</label>
+            <input type="text" class="form-control" name="contact" value="{{data2.mobile}}" required>
+        </div>
+        <div class="form-group col-md-6" >
+            <label>Change Profile Picture</label>
+            <input type="file" class="form-control" name="image" >
+        </div>
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-6" >
+            <label>Gender</label>
+            {% if data2.gender == "Male" %}
+            <div style="border:1px solid lightgrey ; padding:6px ; border-radius:6px">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine1" name="gender" checked class="custom-control-input" value="Male">
+                <label class="custom-control-label" for="customRadioInLine1">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine2" name="gender" class="custom-control-input" value="Female">
+                <label class="custom-control-label" for="customRadioInLine2">Female</label>
+            </div>
+            </div>
+
+            {% else %}
+            <div style="border:1px solid lightgrey ; padding:6px ; border-radius:6px">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine1" name="gender" checked class="custom-control-input" value="Male">
+                <label class="custom-control-label" for="customRadioInLine1">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" checked id="customRadioInLine2" name="gender" class="custom-control-input" value="Female">
+                <label class="custom-control-label" for="customRadioInLine2">Female</label>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group col-md-6" >
+            <label>DOB:</label>
+            <input type="text" class="form-control" name="dob" value="{{data2.dob}}" required>
+        </div>
+    </div>
+ <center>
+
+    <input type="submit" value="Update Profile" class="btn btn-primary my-3" style="width:200px">
+     <a href="{% url 'user_home' %}" class="btn btn-dark">Cancel</a>
+ </center>
+</form>
+
+
+{% if error == "no" %}
+<script>
+    alert("Profile Updated Successfully")
+    window.location = ('{% url 'user_home' %}')
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something Wrong, Try Again...")
+</script>
+{% endif %}

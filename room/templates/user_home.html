@@ -1,0 +1,21 @@
+{% include 'user_navigation.html' %}
+{% load static %}
+<style>
+    .abc{
+        height:500px;
+        margin-top:10px;
+        background-image:url({% static 'images/cc.jpg' %});
+        background-size:100% 100%;
+        animation: abcd 20s infinite;
+    }
+    @keyframes abcd{
+    20%{background-image:url({% static 'images/dd.jpg' %});}
+    40%{background-image:url({% static 'images/ii.jpg' %});}
+    60%{background-image:url({% static 'images/ff.jpg' %});}
+    80%{background-image:url({% static 'images/gg.jpg' %});}
+    100%{background-image:url({% static 'images/hh.jpg' %});}
+    }
+</style>
+<div class="container-fluid abc"></div>
+
+{% include 'footer.html' %}

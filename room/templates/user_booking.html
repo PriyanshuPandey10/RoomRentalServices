@@ -1,0 +1,37 @@
+{% include 'user_navigation.html' %}
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Booking Date</th>
+        <th>No. Of Days</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for i in data %}
+    {% if i.email == user.username %}
+    <tr>
+        <td>{{i.full_name}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.contact}}</td>
+        <td>{{i.bookint_date}}</td>
+        <td align="center">{{i.days}}</td>
+        <td>{{i.price}}</td>
+        {% if i.status == "Pending" %}
+        <td style="color:blue;">{{i.status}}</td>
+        {% endif %}
+        {% if i.status == "Confirm" %}
+        <td><a href="" class="btn btn-success btn-sm">{{i.status}}</a></td>
+        {% endif %}
+        {% if i.status == "Canceled" %}
+        <td style="color:red;">{{i.status}}</td>
+        {% endif %}
+        <td><a href="{% url 'cancel_booking' i.id %}" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Cancel</a></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+

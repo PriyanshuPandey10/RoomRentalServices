@@ -1,0 +1,132 @@
+{% include 'user_navigation.html' %}
+
+<script>
+    function room_price()
+    {
+     a=document.signup.select_days.value
+     b=document.signup.price.value
+     c=a*b
+     alert('Final price is '+c)
+     return true;
+    }
+</script>
+
+
+<marquee style="font-family: 'Monotype Corsiva'; font-size:25px; color:darkcyan; background-color:black; font-weight:bold; margin-top:1%">
+    Confirm Room Booking
+</marquee>
+<hr>
+<form class="container mt-5" onsubmit="return room_price();" name="signup" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="form-group col-md-6" >
+            <label>First Name</label>
+            <input type="text" class="form-control" name="fname" value="{{user.first_name}}" >
+        </div>
+
+        <div class="form-group col-md-6" >
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="lname" value="{{user.last_name}}">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-12" >
+            <label>Email ID:</label>
+            <input type="text" class="form-control" name="email" value="{{user.username}}" readonly required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6" >
+            <label>Contact Number:</label>
+            <input type="text" class="form-control" name="contact" value="{{data2.mobile}}" required>
+        </div>
+        <div class="form-group col-md-6" >
+            <label>Alternate Mobile Number:</label>
+            <input type="text" class="form-control" name="contact2" placeholder="Optional">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6" >
+            <label>Booking Date:</label>
+            <input type="date" class="form-control" name="booking_date"  required>
+        </div>
+
+        <div class="form-group col-md-6" >
+            <label>Number of Days:</label>
+            <select class="form-control" name="select_days" >
+                <option value="1">1 day</option>
+                <option value="2">2 day</option>
+                <option value="3">3 day</option>
+                <option value="4">4 day</option>
+                <option value="5">5 day</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6" >
+            <label>Gender</label>
+            {% if data2.gender == "Male" %}
+            <div style="border:1px solid lightgrey ; padding:6px ; border-radius:6px">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine1" name="gender" class="custom-control-input" value="Male" checked>
+                <label class="custom-control-label" for="customRadioInLine1">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine2" name="gender" class="custom-control-input" value="Female">
+                <label class="custom-control-label" for="customRadioInLine2">Female</label>
+            </div>
+                </div>
+            {% else %}
+            <div style="border:1px solid lightgrey ; padding:6px ; border-radius:6px">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine1" name="gender" class="custom-control-input" value="Male">
+                <label class="custom-control-label" for="customRadioInLine1">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInLine2" name="gender" class="custom-control-input" value="Female" checked>
+                <label class="custom-control-label" for="customRadioInLine2">Female</label>
+            </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="form-group col-md-6" >
+            <label>Price of Day:</label>
+            <input type="text" class="form-control" readonly name="price" value="{{data.price}}">
+        </div>
+        <div class="form-group col-md-12" >
+            <label>DOB:</label>
+            <input type="date" class="form-control" name="dob" value="{{data2.dob}}" placeholder="Enter Your Address" required>
+        </div>
+    </div>
+<input type="submit" value="Submit" class="btn btn-primary my-3" style="width:200px">
+</form>
+
+
+{% if error == "no" %}
+<script>
+    alert("Booking Request has been Send")
+    window.location = ('{% url 'view_room_user' %}')
+</script>
+{% endif %}
+
+{% if error == "non" %}
+<script>
+    alert("Booking Request Already present in this date.")
+    window.location = ('{% url 'view_room_user' %}')
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something Wrong, Try Again...")
+</script>
+{% endif %}
+
+{% include 'footer.html' %}
